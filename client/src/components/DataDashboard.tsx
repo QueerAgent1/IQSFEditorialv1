@@ -2,8 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, Globe, BarChart, Database } from "lucide-react";
 
+interface Statistics {
+  totalCountries: number;
+  improvingTrendPercentage: number;
+  topRatedCount: number;
+  dataPoints: number;
+}
+
 export function DataDashboard() {
-  const { data: stats, isLoading } = useQuery({
+  const { data: stats, isLoading } = useQuery<Statistics>({
     queryKey: ['/api/statistics'],
     enabled: true
   });

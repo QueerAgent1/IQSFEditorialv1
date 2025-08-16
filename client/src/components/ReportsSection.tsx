@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import type { Report } from "@shared/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +20,7 @@ export function ReportsSection() {
     emailMembers: false
   });
 
-  const { data: reports = [], isLoading: reportsLoading, refetch } = useQuery({
+  const { data: reports = [], isLoading: reportsLoading, refetch } = useQuery<Report[]>({
     queryKey: ['/api/reports'],
     enabled: true
   });
@@ -244,7 +245,7 @@ export function ReportsSection() {
               </Card>
             ) : (
               <div className="space-y-4">
-                {reports.slice(0, 5).map((report: any) => (
+                {reports.slice(0, 5).map((report) => (
                   <Card key={report.id} className="hover:shadow-md transition-shadow">
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
@@ -256,7 +257,7 @@ export function ReportsSection() {
                           <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
                             <span className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
-                              {formatDate(report.createdAt)}
+                              {formatDate(report.createdAt.toString())}
                             </span>
                             <span className="flex items-center gap-1">
                               {formatFileIcon(report.format)}

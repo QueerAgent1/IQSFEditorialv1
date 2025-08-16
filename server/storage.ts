@@ -109,6 +109,7 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id,
+      membershipTier: insertUser.membershipTier || "Community",
       createdAt: new Date(),
     };
     this.users.set(id, user);
@@ -140,6 +141,8 @@ export class MemStorage implements IStorage {
     const country: Country = {
       ...insertCountry,
       id,
+      latitude: insertCountry.latitude || null,
+      longitude: insertCountry.longitude || null,
       lastUpdated: new Date(),
     };
     this.countries.set(id, country);
@@ -160,7 +163,9 @@ export class MemStorage implements IStorage {
       ...insertCertification,
       id,
       status: "pending",
+      level: insertCertification.level || "bronze",
       verificationId: `IQSF-${Date.now().toString().slice(-4)}-2025`,
+      notes: insertCertification.notes || null,
       createdAt: new Date(),
     };
     this.certifications.set(id, certification);
@@ -201,7 +206,10 @@ export class MemStorage implements IStorage {
     const report: Report = {
       ...insertReport,
       id,
+      content: insertReport.content || null,
+      countries: insertReport.countries || null,
       downloadUrl: `/api/reports/${id}/download`,
+      generatedBy: insertReport.generatedBy || null,
       createdAt: new Date(),
     };
     this.reports.set(id, report);
@@ -219,7 +227,9 @@ export class MemStorage implements IStorage {
     const membership: Membership = {
       ...insertMembership,
       id,
+      status: insertMembership.status || "active",
       startDate: new Date(),
+      endDate: insertMembership.endDate || null,
     };
     this.memberships.set(id, membership);
     return membership;

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
+import type { Country } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
@@ -17,7 +18,7 @@ export function InteractiveMap() {
     search: ""
   });
 
-  const { data: countries = [], isLoading } = useQuery({
+  const { data: countries = [], isLoading } = useQuery<Country[]>({
     queryKey: ['/api/countries', filters.region, filters.minScore],
     enabled: true
   });
@@ -40,7 +41,7 @@ export function InteractiveMap() {
       }).addTo(map);
 
       // Add markers for countries
-      countries.forEach((country: any) => {
+      countries.forEach((country) => {
         if (country.latitude && country.longitude) {
           const color = getColorByScore(country.safetyScore);
           
@@ -87,7 +88,7 @@ export function InteractiveMap() {
         },
         body: JSON.stringify({
           type: 'global',
-          countries: countries.map((c: any) => c.name),
+          countries: countries.map((c) => c.name),
           format: 'json',
           title: 'LGBTQ+ Global Safety Report'
         })
