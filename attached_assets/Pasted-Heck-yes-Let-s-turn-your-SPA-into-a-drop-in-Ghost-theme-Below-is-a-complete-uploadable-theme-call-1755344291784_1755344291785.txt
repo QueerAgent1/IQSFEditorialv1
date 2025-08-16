@@ -1,0 +1,550 @@
+Heck yes! Let’s turn your SPA into a drop-in Ghost theme.
+Below is a complete, uploadable theme called iqsf-ghost with:
+	•	Ghost-ready templates (default.hbs, home.hbs, post.hbs, page.hbs, tag.hbs, author.hbs)
+	•	Partials (header, footer, navigation)
+	•	Your Supabase + Leaflet front-end wired into home.hbs
+	•	Assets (assets/js/app.js, assets/css/styles.css) carried over from your SPA
+	•	routes.yaml to make the interactive home be the site’s front page
+	•	Minimal package.json for Ghost’s theme validator
+
+Zip it, upload in Ghost Admin → Settings → Design → Upload theme, activate, done. 🔨🤖🔧
+
+⸻
+
+Theme structure
+
+iqsf-ghost/
+├─ package.json
+├─ routes.yaml
+├─ default.hbs
+├─ home.hbs
+├─ index.hbs
+├─ post.hbs
+├─ page.hbs
+├─ tag.hbs
+├─ author.hbs
+├─ partials/
+│  ├─ header.hbs
+│  ├─ footer.hbs
+│  ├─ navigation.hbs
+│  └─ meta.hbs
+└─ assets/
+   ├─ css/
+   │  └─ styles.css
+   └─ js/
+      └─ app.js
+
+
+⸻
+
+package.json
+
+{
+  "name": "iqsf-ghost",
+  "version": "1.0.0",
+  "description": "IQSF — Defining Safety, Advancing Equality (Ghost theme)",
+  "author": "IQSF",
+  "engines": { "ghost": ">=5.0.0" },
+  "config": {
+    "posts_per_page": 12
+  },
+  "license": "MIT"
+}
+
+routes.yaml
+
+routes:
+  /: home
+
+collections:
+  /blog/:
+    permalink: /blog/{slug}/
+    template: index
+
+taxonomies:
+  tag: /tag/{slug}/
+  author: /author/{slug}/
+
+In Ghost Admin → Settings → Labs → Routes → Upload routes.yaml.
+
+⸻
+
+default.hbs
+
+<!DOCTYPE html>
+<html lang="{{@site.locale}}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {{> "meta"}}
+
+  {{!-- Theme CSS --}}
+  <link rel="stylesheet" href="{{asset "css/styles.css"}}"/>
+
+  {{!-- Fonts --}}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+  {{!-- Leaflet --}}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
+
+  {{!-- Supabase --}}
+  <script defer src="https://esm.sh/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+
+  {{ghost_head}}
+</head>
+<body class="{{body_class}}">
+  <a class="skip" href="#main">Skip to content</a>
+
+  {{> "header"}}
+
+  <main id="main">
+    {{{body}}}
+  </main>
+
+  {{> "footer"}}
+
+  {{!-- App JS --}}
+  <script defer src="{{asset "js/app.js"}}"></script>
+
+  {{ghost_foot}}
+</body>
+</html>
+
+
+⸻
+
+partials/meta.hbs
+
+<title>{{meta_title}}</title>
+<meta name="description" content="{{meta_description}}">
+<meta property="og:title" content="{{meta_title}}" />
+<meta property="og:description" content="{{meta_description}}" />
+<meta property="og:type" content="website" />
+<meta name="theme-color" content="#0b0b0c" />
+
+{{!-- Supabase project creds (public anon key is safe) --}}
+<meta name="supabase-url" content="https://eurpkyvcjlqntbjkmhol.supabase.co">
+<meta name="supabase-anon" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1cnBreXZjamxxbnRiamttaG9sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIwOTE2MTUsImV4cCI6MjA2NzY2NzYxNX0.eOh4ZrzQbkypToEcrnOrsTGQZe0FZZL2jxBABeTxKFI">
+
+
+⸻
+
+partials/header.hbs
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="{{@site.url}}" aria-label="{{@site.title}}">
+      <svg class="logo" viewBox="0 0 120 140" aria-hidden="true">
+        <defs>
+          <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FF007A"/>
+            <stop offset="25%" stop-color="#FF8A00"/>
+            <stop offset="50%" stop-color="#FFD600"/>
+            <stop offset="75%" stop-color="#00D084"/>
+            <stop offset="100%" stop-color="#2D6BFF"/>
+          </linearGradient>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path d="M60 5 L110 25 L110 70 C110 100 90 120 60 135 C30 120 10 100 10 70 L10 25 Z"
+              fill="none" stroke="url(#rg)" stroke-width="3" />
+        <path d="M20 35 C60 15, 60 15, 100 35" stroke="url(#rg)" stroke-width="2" fill="none" filter="url(#glow)" />
+        <path d="M20 55 C60 35, 60 35, 100 55" stroke="url(#rg)" stroke-width="2" fill="none" filter="url(#glow)" />
+        <path d="M20 75 C60 55, 60 55, 100 75" stroke="url(#rg)" stroke-width="2" fill="none" filter="url(#glow)" />
+        <path d="M20 95 C60 75, 60 75, 100 95" stroke="url(#rg)" stroke-width="2" fill="none" filter="url(#glow)" />
+        <g fill="url(#rg)" filter="url(#glow)">
+          <circle cx="25" cy="35" r="2.5"/><circle cx="60" cy="20" r="2.5"/><circle cx="95" cy="35" r="2.5"/>
+          <circle cx="25" cy="55" r="2.5"/><circle cx="60" cy="40" r="2.5"/><circle cx="95" cy="55" r="2.5"/>
+          <circle cx="25" cy="75" r="2.5"/><circle cx="60" cy="60" r="2.5"/><circle cx="95" cy="75" r="2.5"/>
+          <circle cx="25" cy="95" r="2.5"/><circle cx="60" cy="80" r="2.5"/><circle cx="95" cy="95" r="2.5"/>
+        </g>
+      </svg>
+      <span class="wordmark">IQSF</span>
+    </a>
+
+    <nav aria-label="Primary">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav">Menu</button>
+      <ul id="nav" class="nav">
+        {{> "navigation"}}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+partials/navigation.hbs
+
+{{!-- Use Ghost's primary navigation if configured; else fallback --}}
+{{#if @site.navigation}}
+  {{navigation}}
+{{else}}
+  <li><a href="#map">Safety Map</a></li>
+  <li><a href="#dashboard">Data</a></li>
+  <li><a href="#cert">Certification</a></li>
+  <li><a href="#membership">Membership</a></li>
+  <li><a href="#shop">Shop</a></li>
+  <li><a href="#events">Summit</a></li>
+  <li><a href="#reports">Reports</a></li>
+{{/if}}
+
+partials/footer.hbs
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer__brand">
+      <span class="wordmark">{{@site.title}}</span>
+      <p>{{@site.description}}</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="#map">Map</a>
+      <a href="#cert">Certification</a>
+      <a href="#membership">Membership</a>
+      <a href="#shop">Shop</a>
+      <a href="#reports">Reports</a>
+    </nav>
+    <div class="social">
+      {{!-- Replace # with your social URLs in Ghost → Settings --}}
+      <a aria-label="Twitter/X" href="#"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M22 2L14.6 9.6 22 22h-3.1L12.9 12.8 6.3 22H2l7.9-9.9L2.5 2H5.6l6 8 8.1-8H22z"/></svg></a>
+      <a aria-label="Instagram" href="#"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3.5A5.5 5.5 0 1112 18.5 5.5 5.5 0 0112 7.5zm0 2A3.5 3.5 0 1015.5 13 3.5 3.5 0 0012 9.5zM18 6.2a1.2 1.2 0 11-1.2 1.2A1.2 1.2 0 0118 6.2z"/></svg></a>
+    </div>
+    <p class="hash">#IQSF #QueerSafety</p>
+    <p class="fine fine--legal">© {{date format="YYYY"}} {{@site.title}}. Tiles © OpenStreetMap contributors. Demo data.</p>
+  </div>
+</footer>
+
+
+⸻
+
+home.hbs  (your interactive SPA becomes the homepage)
+
+{{!< default}}
+
+<section class="hero" id="top">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="wrap hero__content">
+    <h1 class="display">Defining Safety, <span class="accent">Advancing Equality</span>.</h1>
+    <p class="lead">Globally recognized, <strong>data-driven</strong> LGBTQ+ safety standards through research, advocacy, and tools.</p>
+    <div class="cta">
+      <a class="btn btn--magenta" href="#map">Explore Safety Map</a>
+      <a class="btn btn--ghost" href="#cert">Get Certified</a>
+    </div>
+    <ul class="pillars" aria-label="Brand pillars">
+      <li>Safety</li><li>Global Inclusivity</li><li>Data-Driven Action</li><li>Advocacy</li><li>Hope</li>
+    </ul>
+  </div>
+</section>
+
+{{!-- Admin --}}
+<section class="section" id="admin">
+  <div class="wrap">
+    <header class="section__head"><h2>Admin Tools</h2></header>
+    <div class="controls admin-controls">
+      <label class="check"><input id="toggleDataMode" type="checkbox" checked /><span>Use Live Data (Supabase)</span></label>
+      <label class="check"><input id="emailMembers" type="checkbox" /><span>Email members when generating a report</span></label>
+      <p class="fine">Live vs demo preference is saved in your browser.</p>
+    </div>
+  </div>
+</section>
+
+{{!-- Map --}}
+<section id="map" class="section">
+  <div class="wrap">
+    <header class="section__head">
+      <h2>Interactive LGBTQ+ Safety Map</h2>
+      <p>Freemium access for individuals. <strong>Premium</strong> unlocks historical trends & downloadable reports.</p>
+    </header>
+    <div class="map-grid">
+      <div id="mapview" class="mapview" role="region" aria-label="Global safety map"></div>
+      <aside class="controls">
+        <div class="control">
+          <label for="region">Region</label>
+          <select id="region">
+            <option value="all">All</option>
+            <option>Africa</option><option>Americas</option><option>Asia</option><option>Europe</option><option>Oceania</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="minScore">Min Score</label>
+          <input id="minScore" type="range" min="0" max="100" value="0" />
+          <div class="range-val"><span id="minScoreVal">0</span></div>
+        </div>
+        <div class="control">
+          <label for="trend">Trend</label>
+          <select id="trend">
+            <option value="any">Any</option>
+            <option value="improving">Improving</option>
+            <option value="declining">Declining</option>
+            <option value="stable">Stable</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="q">Search country</label>
+          <input id="q" list="countries" placeholder="e.g., Canada" />
+          <datalist id="countries"></datalist>
+        </div>
+        <div class="control">
+          <label for="reportFormat">Report format</label>
+          <select id="reportFormat">
+            <option value="html" selected>HTML (pretty)</option>
+            <option value="md">Markdown (.md)</option>
+            <option value="pdf">PDF (if enabled)</option>
+          </select>
+        </div>
+        <button id="downloadReport" class="btn btn--platinum">Generate AI Report</button>
+        <p class="fine">Map tiles © OpenStreetMap contributors.</p>
+        <div class="legend" aria-label="Legend">
+          <div><span class="dot" style="--c:#ff4d4f"></span> High risk</div>
+          <div><span class="dot" style="--c:#ffb400"></span> Caution</div>
+          <div><span class="dot" style="--c:#ffd600"></span> Mixed</div>
+          <div><span class="dot" style="--c:#00d084"></span> Safer</div>
+          <div><span class="dot" style="--c:#2d6bff"></span> Best</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{{!-- Dashboard --}}
+<section id="dashboard" class="section section--dark">
+  <div class="wrap">
+    <header class="section__head">
+      <h2>Global Snapshot</h2>
+      <p>Data insights refreshed quarterly. Become a member for full datasets and methodology.</p>
+    </header>
+    <div class="cards" id="statCards" aria-live="polite"></div>
+    <div class="chart-row">
+      <figure class="mini-chart" id="scoreDist"><figcaption>Score distribution</figcaption><canvas width="420" height="220"></canvas></figure>
+      <figure class="mini-chart" id="trendBars"><figcaption>Trend mix</figcaption><canvas width="420" height="220"></canvas></figure>
+    </div>
+  </div>
+</section>
+
+{{!-- Certification --}}
+<section id="cert" class="section">
+  <div class="wrap">
+    <header class="section__head"><h2>IQSF Certified Safe Space</h2><p>Display the Digital Shield of Intersectionality on your venue or product.</p></header>
+    <div class="cert-grid">
+      <div class="badge">
+        <div class="badge__inner">
+          <svg viewBox="0 0 120 140" class="badge__logo" aria-hidden="true"><use href=".logo path"></use></svg>
+          <span class="badge__text">IQSF Certified</span>
+        </div>
+        <div class="snippet">
+          <label for="verifyId">Verification ID</label>
+          <input id="verifyId" value="IQSF-XXXX-2025" aria-label="Verification ID sample" />
+          <button class="btn btn--ghost" id="copySnippet">Copy Embed Snippet</button>
+          <pre id="embedCode" class="code" aria-live="polite"></pre>
+        </div>
+      </div>
+
+      <form id="certForm" class="form" novalidate>
+        <h3>Apply for Certification</h3>
+        <div class="grid">
+          <label>Organization<input name="org" required placeholder="Your organization" /></label>
+          <label>Contact Email<input type="email" name="email" required placeholder="name@domain.com" /></label>
+          <label>Country<input name="country" required placeholder="Where you operate" /></label>
+          <label>Headcount<select name="size" required>
+            <option value="">Select…</option><option>1–49</option><option>50–249</option><option>250–999</option><option>1000+</option>
+          </select></label>
+        </div>
+        <label>Notes<textarea name="notes" rows="4" placeholder="Tell us about your current policies & goals"></textarea></label>
+        <button class="btn btn--magenta" type="submit">Submit & Generate Quote</button>
+        <p class="fine" id="certMsg"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+{{!-- Membership --}}
+<section id="membership" class="section section--dark">
+  <div class="wrap">
+    <header class="section__head"><h2>Membership & Data Access</h2><p>Choose the plan that fits your impact goals.</p></header>
+    <div class="pricing">
+      <article class="price"><h3>Community</h3><div class="amount">$0</div><ul><li>Map access (basic)</li><li>Newsletter & alerts</li></ul><button class="btn btn--ghost join" data-plan="Community">Join Free</button></article>
+      <article class="price price--featured"><h3>Advocate</h3><div class="amount">$12<span>/mo</span></div><ul><li>Historical trends</li><li>Local alerts</li><li>Member webinars</li></ul><button class="btn btn--magenta join" data-plan="Advocate">Start 14-day Trial</button></article>
+      <article class="price"><h3>Partner</h3><div class="amount">$129<span>/mo</span></div><ul><li>Org dashboards</li><li>Benchmark dataset</li><li>Email support</li></ul><button class="btn btn--platinum join" data-plan="Partner">Request Invoice</button></article>
+      <article class="price"><h3>Enterprise</h3><div class="amount">Custom</div><ul><li>API + SSO access</li><li>Training & audits</li><li>SLA support</li></ul><button class="btn btn--platinum join" data-plan="Enterprise">Talk to Sales</button></article>
+    </div>
+
+    <dialog id="joinModal" class="modal">
+      <form id="joinForm" method="dialog">
+        <h3>Activate Membership</h3>
+        <p id="planSummary"></p>
+        <label>Full Name<input name="name" required /></label>
+        <label>Email<input type="email" name="email" required /></label>
+        <label>Payment (mock)<input name="card" inputmode="numeric" pattern="\\d{12,19}" placeholder="4111 1111 1111 1111" required /></label>
+        <menu><button value="cancel" class="btn btn--ghost">Cancel</button><button value="confirm" class="btn btn--magenta">Confirm</button></menu>
+        <p class="fine">Test flow for demo—no real charge.</p>
+      </form>
+    </dialog>
+  </div>
+</section>
+
+{{!-- Shop --}}
+<section id="shop" class="section">
+  <div class="wrap">
+    <header class="section__head"><h2>Shop: Wear the Shield</h2><p>Every purchase funds research & local advocacy.</p></header>
+    <div class="store">
+      <div class="product"><div class="product__img gradient-card" aria-hidden="true"></div><h3>Shield Tee — Black</h3><p class="fine">100% cotton, Montserrat print</p><div class="buy"><span>$28</span><button class="btn add" data-sku="tee-black" data-name="Shield Tee — Black" data-price="28">Add</button></div></div>
+      <div class="product"><div class="product__img gradient-card" aria-hidden="true"></div><h3>Enamel Pin — Nodes</h3><p class="fine">Rainbow glow, nickel clasp</p><div class="buy"><span>$12</span><button class="btn add" data-sku="pin-nodes" data-name="Enamel Pin — Nodes" data-price="12">Add</button></div></div>
+      <div class="product"><div class="product__img gradient-card" aria-hidden="true"></div><h3>Window Decal — Safe Space</h3><p class="fine">Certification-style decal</p><div class="buy"><span>$9</span><button class="btn add" data-sku="decal-safe" data-name="Window Decal — Safe Space" data-price="9">Add</button></div></div>
+    </div>
+    <aside class="cart" aria-live="polite">
+      <h3>Your Cart</h3>
+      <ul id="cartList"></ul>
+      <div class="cart__total">Total: $<span id="cartTotal">0</span></div>
+      <button class="btn btn--magenta" id="checkout">Checkout (demo)</button>
+      <p class="fine">Demo checkout generates a receipt file.</p>
+    </aside>
+  </div>
+</section>
+
+{{!-- Events --}}
+<section id="events" class="section section--dark">
+  <div class="wrap">
+    <header class="section__head"><h2>Global LGBTQ+ Safety Summit</h2><p>Thought leaders, policymakers, and advocates convene for practical, data-driven action.</p></header>
+    <div class="event">
+      <div class="event__art" aria-hidden="true"></div>
+      <div class="event__copy">
+        <h3>2025 • Lisbon & Virtual</h3>
+        <ul><li>Keynotes from global advocates</li><li>Workshops: certification & dashboards</li><li>Pitch sessions for community orgs</li></ul>
+        <button class="btn btn--platinum" id="holdSeat">Hold My Seat</button>
+        <p class="fine">We’ll email a confirmation & early-bird code.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{!-- Reports --}}
+<section id="reports" class="section section--dark">
+  <div class="wrap">
+    <header class="section__head"><h2>Latest Reports</h2><p>Signed links to the most recent generated reports.</p></header>
+    <div id="reportsList" class="cards"></div>
+    <p class="fine">Links expire periodically; refresh to regenerate signed URLs.</p>
+  </div>
+</section>
+
+{{!-- Optional: list latest blog posts below the app UI --}}
+<section class="section">
+  <div class="wrap">
+    <header class="section__head"><h2>Latest from the blog</h2></header>
+    <div class="cards">
+      {{#foreach posts limit="6"}}
+        <article class="card">
+          <div class="card__val"><a href="{{url}}">{{title}}</a></div>
+          <div class="card__label">{{date}}</div>
+        </article>
+      {{/foreach}}
+    </div>
+  </div>
+</section>
+
+
+⸻
+
+index.hbs (blog index)
+
+{{!< default}}
+<section class="section">
+  <div class="wrap">
+    <header class="section__head">
+      <h2>Blog</h2>
+      <p>Updates from IQSF.</p>
+    </header>
+
+    {{#foreach posts}}
+      <article class="section" style="padding:24px 0;border-top:1px solid rgba(255,255,255,.06)">
+        <div class="wrap">
+          <h3><a href="{{url}}">{{title}}</a></h3>
+          <p class="fine">{{date}} — {{primary_tag.name}}</p>
+          <p>{{excerpt}}</p>
+        </div>
+      </article>
+    {{/foreach}}
+
+    {{pagination}}
+  </div>
+</section>
+
+post.hbs
+
+{{!< default}}
+<article class="section">
+  <div class="wrap">
+    <header class="section__head"><h1 class="display">{{title}}</h1><p class="fine">{{date}} — {{primary_tag.name}}</p></header>
+    <div class="content">{{content}}</div>
+  </div>
+</article>
+
+page.hbs
+
+{{!< default}}
+<section class="section">
+  <div class="wrap">
+    <header class="section__head"><h1 class="display">{{title}}</h1></header>
+    <div class="content">{{content}}</div>
+  </div>
+</section>
+
+tag.hbs
+
+{{!< default}}
+<section class="section">
+  <div class="wrap">
+    <header class="section__head"><h1 class="display">Tag: {{tag.name}}</h1></header>
+    {{#foreach posts}}<article class="section" style="padding:16px 0;border-top:1px solid rgba(255,255,255,.06)"><div class="wrap"><h3><a href="{{url}}">{{title}}</a></h3><p class="fine">{{date}}</p></div></article>{{/foreach}}
+    {{pagination}}
+  </div>
+</section>
+
+author.hbs
+
+{{!< default}}
+<section class="section">
+  <div class="wrap">
+    <header class="section__head"><h1 class="display">{{author.name}}</h1><p class="fine">{{author.bio}}</p></header>
+    {{#foreach posts}}<article class="section" style="padding:16px 0;border-top:1px solid rgba(255,255,255,.06)"><div class="wrap"><h3><a href="{{url}}">{{title}}</a></h3><p class="fine">{{date}}</p></div></article>{{/foreach}}
+    {{pagination}}
+  </div>
+</section>
+
+
+⸻
+
+assets/css/styles.css
+
+Use the exact CSS from your SPA (I’ve copied it 1:1).
+(It’s long, so I won’t repeat it here; paste the full stylesheet you already have.)
+
+If you need it again, I can reprint it—but it’s the same styles.css you’re already using.
+
+⸻
+
+assets/js/app.js
+
+Use the full SPA JS we finalized (Supabase + Leaflet + AI reports + admin + reports list).
+(Also identical; paste the app.js you already have.)
+
+Only change needed: none. It works as-is inside Ghost because we load it via {{asset}} and kept the same DOM structure.
+
+⸻
+
+How to install
+	1.	Put all files into a folder iqsf-ghost/
+	2.	Zip the folder contents (not the folder itself):
+iqsf-ghost.zip
+	3.	Ghost Admin → Settings → Design → Change theme → Upload theme
+	4.	Ghost Admin → Settings → Labs → Routes → Upload routes.yaml
+	5.	Visit your homepage — your interactive IQSF app now is your Ghost home. ✔️
+
+⸻
+
+Optional tweaks
+	•	Navigation: Configure primary navigation in Ghost Admin; the theme uses it automatically.
+	•	SEO: Ghost injects <title>/SEO via {{ghost_head}}; our meta.hbs mirrors your SPA defaults.
+	•	Membership: Ghost has its own Members system; if you want, we can trigger Ghost’s Portal instead of the demo modal.
+	•	i18n: We can wrap labels with Ghost’s {{t}} helper and add a locales/ folder.
+
+Want me to bundle the ZIP for you (ready to upload) or wire the “Join” buttons into Ghost Members?

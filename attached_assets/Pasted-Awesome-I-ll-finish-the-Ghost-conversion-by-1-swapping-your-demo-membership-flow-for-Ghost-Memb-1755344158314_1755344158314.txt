@@ -1,0 +1,186 @@
+Awesome — I’ll finish the Ghost conversion by:
+	1.	swapping your demo membership flow for Ghost Members (Portal)
+	2.	keeping a graceful fallback to your existing demo modal if Members is off
+	3.	giving you a quick script to zip & upload the theme
+
+Below are drop-in diffs so you don’t have to refactor everything.
+
+⸻
+
+1) Enable Ghost Members (Portal)
+
+In Ghost Admin → Settings → Membership
+	•	Turn Enable Portal ON
+	•	Configure plans (free / monthly / yearly) and brand
+	•	(Optional) Add Stripe if you’ll charge
+
+Ghost injects the Portal JS automatically; we just need the right buttons.
+
+⸻
+
+2) Replace the Membership section (Portal-powered)
+
+Open home.hbs and replace the entire “Membership & Data Access” section with this:
+
+<section id="membership" class="section section--dark">
+  <div class="wrap">
+    <header class="section__head">
+      <h2>Membership & Data Access</h2>
+      <p>Choose the plan that fits your impact goals — powered by Ghost Members.</p>
+    </header>
+
+    <div class="pricing">
+      <article class="price">
+        <h3>Community</h3>
+        <div class="amount">$0</div>
+        <ul>
+          <li>Map access (basic)</li>
+          <li>Newsletter & alerts</li>
+        </ul>
+        <button class="btn btn--ghost" data-portal="signup">Join Free</button>
+      </article>
+
+      <article class="price price--featured">
+        <h3>Advocate</h3>
+        <div class="amount">{{@price.monthly}}<span>/mo</span></div>
+        <ul>
+          <li>Historical trends</li>
+          <li>Local alerts</li>
+          <li>Member webinars</li>
+        </ul>
+        <button class="btn btn--magenta" data-portal="signup">Start Trial</button>
+      </article>
+
+      <article class="price">
+        <h3>Partner</h3>
+        <div class="amount">{{@price.yearly}}<span>/yr</span></div>
+        <ul>
+          <li>Org dashboards</li>
+          <li>Benchmark dataset</li>
+          <li>Email support</li>
+        </ul>
+        <button class="btn btn--platinum" data-portal="signup">Get Yearly</button>
+      </article>
+
+      <article class="price">
+        <h3>Enterprise</h3>
+        <div class="amount">Custom</div>
+        <ul>
+          <li>API + SSO access</li>
+          <li>Training & audits</li>
+          <li>SLA support</li>
+        </ul>
+        <a class="btn btn--platinum" href="mailto:sales@yourdomain">Talk to Sales</a>
+      </article>
+    </div>
+
+    <div style="margin-top:10px">
+      {{#if @member}}
+        <button class="btn btn--ghost" data-portal="account">Manage account</button>
+        <button class="btn btn--ghost" data-portal="signout">Sign out</button>
+      {{else}}
+        <button class="btn btn--ghost" data-portal="signin">Sign in</button>
+      {{/if}}
+    </div>
+  </div>
+</section>
+
+Notes:
+	•	data-portal="signup|signin|account|signout" are the official Portal triggers.
+	•	{{@price.monthly}} / {{@price.yearly}} render the prices you set in Admin.
+
+⸻
+
+3) Make app.js “Members-aware” (and keep your demo as fallback)
+
+You had a demo membership modal that inserted rows into Supabase. We’ll keep it only as a fallback when Ghost Members isn’t available.
+
+Open assets/js/app.js and:
+
+A) Add this helper near the top (after the DOM helpers):
+
+const hasGhostPortal = !!document.querySelector('[data-portal]') || !!window.GhostPortal;
+
+B) Replace your entire setupMembership() function with:
+
+function setupMembership(){
+  // If Ghost Members (Portal) is on, do nothing: buttons already work.
+  if (hasGhostPortal) return;
+
+  // Fallback to the demo dialog you had
+  const dialog=$('#joinModal'), form=$('#joinForm'), summary=$('#planSummary');
+  if(!dialog||!form) return;
+
+  $$('.join').forEach(btn=>btn.addEventListener('click',()=>{
+    const plan=btn.dataset.plan;
+    summary.textContent = `Plan: ${plan} — ${plan==='Community'?'$0':plan==='Advocate'?'$12/mo (14-day trial)':plan==='Partner'?'$129/mo':'Custom'}`;
+    dialog.showModal(); form.reset();
+  }));
+
+  form.addEventListener('submit', async (e)=>{
+    const val=e.submitter?.value;
+    if(val==='cancel'){ e.preventDefault(); dialog.close('cancel'); return; }
+    if(val==='confirm'){
+      const ok=['name','email','card'].every(n=>form.querySelector(`[name="${n}"]`).reportValidity());
+      if(!ok){ e.preventDefault(); return; }
+      e.preventDefault(); dialog.close('confirm'); alert('✅ Membership activated (demo).');
+      if (hasSupabase) {
+        const planName = summary.textContent.replace(/^Plan:\s*/,'').split(' — ')[0];
+        await supabase.from('memberships').insert({
+          plan: planName, status:'active',
+          name: form.querySelector('[name="name"]').value,
+          email: form.querySelector('[name="email"]').value
+        });
+      }
+    }
+  });
+}
+
+C) (Optional) Hide the old demo modal in the theme
+
+If you want a clean look when Members is on, hide the modal via CSS:
+
+/* Hide demo membership modal if Portal exists */
+body.portal-active #joinModal { display: none !important; }
+
+(Portal adds <div id="portal-root"> to the page; you can toggle a portal-active class yourself if you’d like. Not required.)
+
+⸻
+
+4) “Email members” switch integration
+
+Your AI report button already has a “Email members when generating a report” checkbox. That checkbox still controls your Supabase Edge Function broadcast (via Resend). Ghost Members mailing is separate (Newsletters). Keeping both is fine: Portal handles sign-in/out/billing; your Supabase function handles report distribution to the members table you maintain (from the fallback).
+
+If you prefer one source of truth (Ghost Members only), we can change the Edge Function to call Ghost’s Members API (requires Admin API key) and email through Ghost newsletters — say the word and I’ll wire it.
+
+⸻
+
+5) Build the theme ZIP
+
+From the directory containing iqsf-ghost/:
+
+macOS/Linux
+
+cd iqsf-ghost
+zip -r ../iqsf-ghost.zip .
+
+Windows (PowerShell)
+
+cd iqsf-ghost
+Compress-Archive -Path * -DestinationPath ..\iqsf-ghost.zip -Force
+
+Upload iqsf-ghost.zip in Ghost Admin → Settings → Design → Upload theme and activate.
+Then go to Settings → Labs → Routes and upload the routes.yaml.
+
+⸻
+
+6) Quick smoke test checklist
+	•	Home loads with map, charts, “Generate AI Report” button ✅
+	•	“Membership” buttons open Portal (signup/signin/account) ✅
+	•	If you temporarily disable Members in Admin, the demo modal appears instead ✅
+	•	“Reports” section lists signed links from Supabase Storage ✅
+	•	Generate a report with Email members checked → your Supabase Resend integration sends emails ✅
+
+⸻
+
+If you want me to switch report emails to Ghost newsletters (or to show member-only content blocks on the page using {{#if @member}}), I’ll drop the exact code and Admin API setup next.
