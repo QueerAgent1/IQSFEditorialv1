@@ -72,6 +72,18 @@ export function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-black/20"></div>
             </div>
             
+            {/* IQSF Overlay Branding */}
+            <div className="absolute top-8 left-8 right-8 z-10">
+              <div className="text-white">
+                <div className="font-display text-6xl lg:text-8xl xl:text-9xl font-light tracking-wider drop-shadow-2xl">
+                  IQSF
+                </div>
+                <div className="caption text-sm lg:text-base tracking-[0.3em] mt-2 text-white/90">
+                  DEFINING SAFETY, ADVANCING EQUALITY
+                </div>
+              </div>
+            </div>
+            
             {/* Magazine-style overlay text */}
             <div className="absolute bottom-8 left-8 right-8 space-y-4 text-white">
               <div className="backdrop-blur-sm bg-black/40 p-6 border border-white/30">
