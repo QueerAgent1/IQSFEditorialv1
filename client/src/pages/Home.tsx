@@ -2,6 +2,8 @@ import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
 import { InteractiveMap } from "@/components/InteractiveMap";
 import { DataDashboard } from "@/components/DataDashboard";
+import { CommunityStories } from "@/components/CommunityStories";
+import { BrandShowcase } from "@/components/BrandShowcase";
 import { CertificationSystem } from "@/components/CertificationSystem";
 import { MembershipTiers } from "@/components/MembershipTiers";
 import { ReportsSection } from "@/components/ReportsSection";
@@ -37,6 +39,8 @@ export default function Home() {
       <HeroSection />
       <InteractiveMap />
       <DataDashboard />
+      <CommunityStories />
+      <BrandShowcase />
       <CertificationSystem />
       <MembershipTiers />
       <ReportsSection />

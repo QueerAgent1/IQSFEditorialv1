@@ -2,6 +2,7 @@ import React from "react";
 import { Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import coverImage from "@assets/IMG_0299_1755419317873.jpeg";
+import neonShield from "@assets/IMG_0286_1755424434642.png";
 
 type HeroSectionProps = {
   title?: string;
