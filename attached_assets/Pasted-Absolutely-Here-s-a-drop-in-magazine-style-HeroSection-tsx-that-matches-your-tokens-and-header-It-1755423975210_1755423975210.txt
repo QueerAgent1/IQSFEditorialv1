@@ -1,45 +1,39 @@
+Absolutely. Here’s a drop-in, magazine-style HeroSection.tsx that matches your tokens and header. It includes the glass overlay, alternative headline treatment, mobile-first layout, and accessible structure. Works in plain React; I’ve also added a tiny Next.js variant comment if you’re using next/image.
+
+// client/src/components/HeroSection.tsx
+"use client"; // (safe to keep even in CRA/Vite; ignored)
+
 import React from "react";
 import { Shield } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import coverImage from "@assets/IMG_0299_1755419317873.jpeg";
 
 type HeroSectionProps = {
   title?: string;
   tagline?: string;
-  imageSrc?: string;
+  imageSrc: string;        // hero image URL
   imageAlt?: string;
-  coverlines?: string[];
+  coverlines?: string[];   // bullet items in the glass box
   className?: string;
 };
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   title = "IQSF",
   tagline = "Defining Safety, Advancing Equality",
-  imageSrc = coverImage,
-  imageAlt = "IQSF Editorial Cover",
+  imageSrc,
+  imageAlt = "",
   coverlines = [
     "Global Safety Index Analysis",
     "Interactive Map Exploration",
-    "Certification & Standards",
-    "Community Impact Stories"
   ],
   className = "",
 }) => {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
   return (
     <section
       id="hero"
       aria-label="Feature cover"
       className={`relative w-full editorial-spacing ${className}`}
     >
-      {/* Masthead lockup */}
-      <div className="editorial-container mb-6 pt-24">
+      {/* Masthead lockup (optional if Header already shows it) */}
+      <div className="editorial-container mb-6">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 bg-black flex items-center justify-center editorial-shadow">
             <Shield className="text-white h-5 w-5" aria-hidden="true" />
@@ -58,17 +52,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Hero image with overlay */}
       <div className="editorial-container">
         <div className="relative editorial-shadow editorial-overlay rounded-sm overflow-hidden">
+          {/* Plain <img>. If using Next.js, swap to <Image fill priority ... /> */}
           <img
             src={imageSrc}
             alt={imageAlt}
             className="w-full h-[58vh] sm:h-[70vh] object-cover"
             draggable={false}
-            style={{ filter: 'grayscale(15%) contrast(1.1) brightness(0.95)' }}
           />
 
-          {/* Magazine title overlay */}
+          {/* Subtle top-left magazine title (alternate treatment) */}
           <div className="absolute top-6 left-6 z-10">
-            <span className="font-display text-white/90 text-5xl sm:text-7xl tracking-tight drop-shadow-2xl">
+            <span className="font-display text-white/90 text-5xl sm:text-7xl tracking-tight drop-shadow-lg">
               {title}
             </span>
             <div className="mt-2">
@@ -91,40 +85,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </ul>
           </div>
 
-          {/* Decorative gradient line at bottom */}
+          {/* Decorative gradient line at bottom for luxury vibe */}
           <div className="absolute inset-x-0 bottom-0 h-1 pride-gradient-editorial opacity-70" />
-        </div>
-      </div>
-
-      {/* Editorial Action Buttons */}
-      <div className="editorial-container mt-12">
-        <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-          <Button
-            onClick={() => scrollToSection('map')}
-            className="bg-black text-white hover:bg-black/90 h-12 px-8 font-normal tracking-wide"
-            style={{ borderRadius: '2px' }}
-          >
-            Read Features
-          </Button>
-          <Button
-            onClick={() => scrollToSection('certification')}
-            variant="outline"
-            className="border-black text-black hover:bg-black hover:text-white h-12 px-8 font-normal tracking-wide"
-            style={{ borderRadius: '2px' }}
-          >
-            View Collection
-          </Button>
-        </div>
-      </div>
-
-      {/* Editorial Tags */}
-      <div className="editorial-container">
-        <div className="flex flex-wrap justify-center lg:justify-start gap-3 mt-16 pt-8 border-t border-black/10">
-          <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Safety Research</span>
-          <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Global Impact</span>
-          <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Data Analytics</span>
-          <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Policy Advocacy</span>
-          <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Community</span>
         </div>
       </div>
     </section>
@@ -132,3 +94,41 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 };
 
 export default HeroSection;
+
+Use it
+
+// client/src/App.tsx (or your page)
+import HeroSection from "@/components/HeroSection";
+
+export default function Page() {
+  return (
+    <>
+      <HeroSection
+        imageSrc="https://your.cdn/iqsf-cover.jpg"
+        imageAlt="Editorial portrait cover representing global LGBTQ+ community"
+        coverlines={[
+          "Global Safety Index Analysis",
+          "Interactive Map Exploration",
+          "Country Reports & Trends",
+          "How Sanctuaries Are Rated",
+        ]}
+      />
+      {/* ...rest of the sections */}
+    </>
+  );
+}
+
+Notes
+	•	Glass overlay uses backdrop-blur-sm bg-black/40 so the cover image shines without losing readability.
+	•	Uses your caption / font-display / serif system + tokens you defined.
+	•	Responsive: hero is ~70vh on larger screens, ~58vh on mobile; tweak if you want a taller cover.
+	•	If you’re in Next.js, swap the <img> with:
+
+// import Image from "next/image";
+<div className="relative w-full h-[58vh] sm:h-[70vh]">
+  <Image src={imageSrc} alt={imageAlt} fill priority className="object-cover" />
+</div>
+
+
+
+Want me to add an IntersectionObserver so the header nav highlights the active section as you scroll (and a sticky underline hover)?
