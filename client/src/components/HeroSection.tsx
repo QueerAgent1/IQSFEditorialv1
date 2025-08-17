@@ -36,95 +36,74 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     <section
       id="hero"
       aria-label="Feature cover"
-      className={`relative w-full editorial-spacing ${className}`}
+      className={`relative min-h-screen w-full ${className}`}
     >
-      {/* Masthead lockup */}
-      <div className="editorial-container mb-6 pt-24">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-black flex items-center justify-center editorial-shadow">
-            <Shield className="text-white h-5 w-5" aria-hidden="true" />
-          </div>
-          <div>
-            <h1 className="font-display text-4xl sm:text-5xl tracking-wider text-black font-light">
+      {/* Hero image with overlay - Full screen coverage */}
+      <div className="relative w-full min-h-screen editorial-shadow overflow-hidden">
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          className="w-full h-full min-h-screen object-cover"
+          draggable={false}
+          style={{ filter: 'grayscale(15%) contrast(1.1) brightness(0.95)' }}
+        />
+
+        {/* Magazine title overlay - Top positioned */}
+        <div className="absolute top-8 left-8 right-8 z-10">
+          <div className="text-white">
+            <div className="font-display text-6xl lg:text-8xl xl:text-9xl font-light tracking-wider drop-shadow-2xl">
               {title}
-            </h1>
-            <p className="caption text-black/70 tracking-[0.2em] mt-1">
+            </div>
+            <div className="caption text-sm lg:text-base tracking-[0.3em] mt-2 text-white/90">
               {tagline.toUpperCase()}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Hero image with overlay */}
-      <div className="editorial-container">
-        <div className="relative editorial-shadow editorial-overlay rounded-sm overflow-hidden">
-          <img
-            src={imageSrc}
-            alt={imageAlt}
-            className="w-full h-[58vh] sm:h-[70vh] object-cover"
-            draggable={false}
-            style={{ filter: 'grayscale(15%) contrast(1.1) brightness(0.95)' }}
-          />
-
-          {/* Magazine title overlay */}
-          <div className="absolute top-6 left-6 z-10">
-            <span className="font-display text-white/90 text-5xl sm:text-7xl tracking-tight drop-shadow-2xl">
-              {title}
-            </span>
-            <div className="mt-2">
-              <span className="caption text-white/80 tracking-[0.35em]">
-                {tagline.toUpperCase()}
-              </span>
             </div>
           </div>
+        </div>
 
-          {/* Glass coverline box */}
-          <div
-            className="absolute bottom-8 left-6 right-6 sm:left-8 sm:right-auto sm:max-w-md
-                       backdrop-blur-sm bg-black/40 text-white p-6 editorial-shadow rounded-sm"
-          >
-            <p className="caption mb-3 tracking-widest">INSIDE THIS ISSUE</p>
-            <ul className="space-y-1 font-serif text-base leading-relaxed">
-              {coverlines.map((line, i) => (
-                <li key={i}>• {line}</li>
-              ))}
-            </ul>
+        {/* Glass coverline box - Bottom positioned */}
+        <div className="absolute bottom-8 left-8 right-8 sm:left-8 sm:right-auto sm:max-w-md backdrop-blur-sm bg-black/40 text-white p-6 editorial-shadow rounded-sm">
+          <p className="caption mb-3 tracking-widest text-white/80">INSIDE THIS ISSUE</p>
+          <ul className="space-y-2 text-sm font-light">
+            {coverlines.map((line, i) => (
+              <li key={i}>• {line}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Decorative gradient line at bottom */}
+        <div className="absolute inset-x-0 bottom-0 h-1 pride-gradient-editorial opacity-70" />
+      </div>
+
+      {/* Content Section Below Image */}
+      <div className="bg-white py-16">
+        <div className="editorial-container">
+          {/* Editorial Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <Button
+              onClick={() => scrollToSection('map')}
+              className="bg-black text-white hover:bg-black/90 h-12 px-8 font-normal tracking-wide"
+              style={{ borderRadius: '2px' }}
+            >
+              Read Features
+            </Button>
+            <Button
+              onClick={() => scrollToSection('certification')}
+              variant="outline"
+              className="border-black text-black hover:bg-black hover:text-white h-12 px-8 font-normal tracking-wide"
+              style={{ borderRadius: '2px' }}
+            >
+              View Collection
+            </Button>
           </div>
 
-          {/* Decorative gradient line at bottom */}
-          <div className="absolute inset-x-0 bottom-0 h-1 pride-gradient-editorial opacity-70" />
-        </div>
-      </div>
-
-      {/* Editorial Action Buttons */}
-      <div className="editorial-container mt-12">
-        <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-          <Button
-            onClick={() => scrollToSection('map')}
-            className="bg-black text-white hover:bg-black/90 h-12 px-8 font-normal tracking-wide"
-            style={{ borderRadius: '2px' }}
-          >
-            Read Features
-          </Button>
-          <Button
-            onClick={() => scrollToSection('certification')}
-            variant="outline"
-            className="border-black text-black hover:bg-black hover:text-white h-12 px-8 font-normal tracking-wide"
-            style={{ borderRadius: '2px' }}
-          >
-            View Collection
-          </Button>
-        </div>
-      </div>
-
-      {/* Editorial Tags */}
-      <div className="editorial-container">
-        <div className="flex flex-wrap justify-center lg:justify-start gap-3 mt-16 pt-8 border-t border-black/10">
-          <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Safety Research</span>
-          <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Global Impact</span>
-          <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Data Analytics</span>
-          <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Policy Advocacy</span>
-          <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Community</span>
+          {/* Editorial Tags */}
+          <div className="flex flex-wrap justify-center gap-3 pt-8 border-t border-black/10">
+            <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Safety Research</span>
+            <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Global Impact</span>
+            <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Data Analytics</span>
+            <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Policy Advocacy</span>
+            <span className="caption px-4 py-2 bg-white border border-black/20 tracking-wide">Community</span>
+          </div>
         </div>
       </div>
     </section>
