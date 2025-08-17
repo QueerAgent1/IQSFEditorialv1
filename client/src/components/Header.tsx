@@ -13,14 +13,14 @@ export function Header() {
     <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-black/10 z-50">
       <div className="editorial-container">
         <div className="flex justify-between items-center py-6">
-          {/* Luxury Logo */}
+          {/* Prominent IQSF Branding */}
           <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 bg-black flex items-center justify-center">
-              <Shield className="text-white h-4 w-4" />
+            <div className="w-10 h-10 bg-black flex items-center justify-center">
+              <Shield className="text-white h-5 w-5" />
             </div>
             <div>
-              <h1 className="font-display text-2xl tracking-wider text-black font-light">IQSF</h1>
-              <p className="caption text-xs text-black/60 tracking-[0.2em]">Editorial</p>
+              <h1 className="font-display text-4xl lg:text-5xl tracking-wider text-black font-light">IQSF</h1>
+              <p className="caption text-sm text-black/70 tracking-[0.2em] mt-1">Defining Safety, Advancing Equality</p>
             </div>
           </div>
 
