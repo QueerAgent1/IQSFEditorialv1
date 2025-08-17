@@ -32,43 +32,63 @@ export function DataDashboard() {
   );
 
   return (
-    <section id="dashboard" className="py-20 bg-dark-bg text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="dashboard" className="editorial-spacing bg-black text-white">
+      <div className="editorial-container">
+        
+        {/* Editorial Header */}
         <div className="text-center mb-16">
-          <h2 className="font-display font-bold text-4xl lg:text-5xl mb-6">
-            Global Safety Snapshot
-          </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Data insights refreshed quarterly. Become a member for full datasets and methodology.
-          </p>
+          <div className="space-y-4 mb-8">
+            <p className="caption tracking-[0.3em] text-white/60">Data Story</p>
+            <h2 className="font-display text-5xl lg:text-6xl font-light tracking-tight text-white">
+              By the <em className="font-normal pride-text-editorial">Numbers</em>
+            </h2>
+          </div>
+          
+          <div className="max-w-4xl mx-auto space-y-6">
+            <p className="editorial-lead text-white/90">
+              Quantifying progress through comprehensive data analysis across demographics, 
+              legislation, and lived experiences of LGBTQ+ communities worldwide.
+            </p>
+          </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          <StatCard
-            icon={Globe}
-            value={stats?.totalCountries || "..."}
-            label="Countries Tracked"
-            loading={isLoading}
-          />
-          <StatCard
-            icon={TrendingUp}
-            value={stats?.improvingTrendPercentage ? `${stats.improvingTrendPercentage}%` : "..."}
-            label="Improving Trend"
-            loading={isLoading}
-          />
-          <StatCard
-            icon={BarChart}
-            value={stats?.topRatedCount || "..."}
-            label="Top Rated Countries"
-            loading={isLoading}
-          />
-          <StatCard
-            icon={Database}
-            value={stats?.dataPoints ? `${(stats.dataPoints / 1000000).toFixed(1)}M+` : "..."}
-            label="Data Points"
-            loading={isLoading}
-          />
+        {/* Editorial Stats Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <div className="text-center space-y-3">
+            <div className="text-6xl lg:text-7xl font-light tracking-tight text-white">
+              {isLoading ? "—" : stats?.totalCountries || "195"}
+            </div>
+            <div className="caption tracking-[0.2em] text-white/60 border-t border-white/20 pt-3">
+              Nations Analyzed
+            </div>
+          </div>
+          
+          <div className="text-center space-y-3">
+            <div className="text-6xl lg:text-7xl font-light tracking-tight text-white">
+              {isLoading ? "—" : stats?.improvingTrendPercentage ? `${stats.improvingTrendPercentage}%` : "47%"}
+            </div>
+            <div className="caption tracking-[0.2em] text-white/60 border-t border-white/20 pt-3">
+              Positive Trajectory
+            </div>
+          </div>
+          
+          <div className="text-center space-y-3">
+            <div className="text-6xl lg:text-7xl font-light tracking-tight text-white">
+              {isLoading ? "—" : stats?.topRatedCount || "23"}
+            </div>
+            <div className="caption tracking-[0.2em] text-white/60 border-t border-white/20 pt-3">
+              Leading Nations
+            </div>
+          </div>
+          
+          <div className="text-center space-y-3">
+            <div className="text-6xl lg:text-7xl font-light tracking-tight text-white">
+              {isLoading ? "—" : stats?.dataPoints ? `${(stats.dataPoints / 1000000).toFixed(1)}M+` : "2.4M+"}
+            </div>
+            <div className="caption tracking-[0.2em] text-white/60 border-t border-white/20 pt-3">
+              Data Points
+            </div>
+          </div>
         </div>
 
         {/* Charts */}

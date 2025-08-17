@@ -10,69 +10,75 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rainbow-gradient rounded-xl flex items-center justify-center">
-              <Shield className="text-white h-6 w-6" />
+    <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-black/10 z-50">
+      <div className="editorial-container">
+        <div className="flex justify-between items-center py-6">
+          {/* Luxury Logo */}
+          <div className="flex items-center space-x-4">
+            <div className="w-8 h-8 bg-black flex items-center justify-center">
+              <Shield className="text-white h-4 w-4" />
             </div>
             <div>
-              <h1 className="font-display font-bold text-xl text-gray-900">IQSF</h1>
-              <p className="text-xs text-gray-600">Safety & Equality</p>
+              <h1 className="font-display text-2xl tracking-wider text-black font-light">IQSF</h1>
+              <p className="caption text-xs text-black/60 tracking-[0.2em]">Editorial</p>
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          {/* Editorial Navigation */}
+          <nav className="hidden lg:flex items-center space-x-12">
             <button 
               onClick={() => scrollToSection('map')}
-              className="text-gray-700 hover:text-pride-pink transition-colors font-medium"
+              className="caption text-black/80 hover:text-black transition-all duration-300 tracking-wide"
             >
-              Safety Map
+              Features
             </button>
             <button 
               onClick={() => scrollToSection('dashboard')}
-              className="text-gray-700 hover:text-pride-pink transition-colors font-medium"
+              className="caption text-black/80 hover:text-black transition-all duration-300 tracking-wide"
             >
               Data
             </button>
             <button 
               onClick={() => scrollToSection('certification')}
-              className="text-gray-700 hover:text-pride-pink transition-colors font-medium"
+              className="caption text-black/80 hover:text-black transition-all duration-300 tracking-wide"
             >
               Certification
             </button>
             <button 
               onClick={() => scrollToSection('membership')}
-              className="text-gray-700 hover:text-pride-pink transition-colors font-medium"
+              className="caption text-black/80 hover:text-black transition-all duration-300 tracking-wide"
             >
-              Membership
+              Society
             </button>
             <button 
               onClick={() => scrollToSection('reports')}
-              className="text-gray-700 hover:text-pride-pink transition-colors font-medium"
+              className="caption text-black/80 hover:text-black transition-all duration-300 tracking-wide"
             >
               Reports
             </button>
           </nav>
 
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <Button variant="ghost" className="text-gray-700 hover:text-pride-pink">
-              Sign In
-            </Button>
-            <Button className="bg-pride-pink text-white hover:bg-pink-600 glow-effect">
-              Get Started
+          {/* Luxury Actions */}
+          <div className="hidden lg:flex items-center space-x-6">
+            <button className="caption text-black/60 hover:text-black transition-colors tracking-wide">
+              Subscribe
+            </button>
+            <div className="w-px h-6 bg-black/20"></div>
+            <Button 
+              className="bg-black text-white hover:bg-black/90 font-normal text-sm tracking-wide px-6 py-2 h-auto"
+              style={{ borderRadius: '2px' }}
+            >
+              Access
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <Button variant="ghost" size="icon" className="lg:hidden">
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+          {/* Mobile Menu */}
+          <Button variant="ghost" size="icon" className="lg:hidden p-2">
+            <div className="flex flex-col space-y-1">
+              <div className="w-5 h-px bg-black"></div>
+              <div className="w-5 h-px bg-black"></div>
+              <div className="w-5 h-px bg-black"></div>
+            </div>
           </Button>
         </div>
       </div>

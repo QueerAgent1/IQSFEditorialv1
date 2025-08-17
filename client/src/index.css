@@ -1,89 +1,119 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Didot+Gothic&family=Futura+PT:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(210, 25%, 7.8431%);
-  --card: hsl(180, 6.6667%, 97.0588%);
-  --card-foreground: hsl(210, 25%, 7.8431%);
+  /* Luxury Magazine Color Palette */
+  --background: hsl(0, 0%, 98%);
+  --foreground: hsl(0, 0%, 8%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(0, 0%, 8%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(210, 25%, 7.8431%);
-  --primary: hsl(324, 100%, 50%);
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(210, 25%, 7.8431%);
-  --secondary-foreground: hsl(0, 0%, 100%);
-  --muted: hsl(240, 1.9608%, 90%);
-  --muted-foreground: hsl(210, 25%, 7.8431%);
-  --accent: hsl(211.5789, 51.3514%, 92.7451%);
-  --accent-foreground: hsl(203.8863, 88.2845%, 53.1373%);
-  --destructive: hsl(356.3033, 90.5579%, 54.3137%);
-  --destructive-foreground: hsl(0, 0%, 100%);
-  --border: hsl(201.4286, 30.4348%, 90.9804%);
-  --input: hsl(200, 23.0769%, 97.4510%);
-  --ring: hsl(202.8169, 89.1213%, 53.1373%);
+  --popover-foreground: hsl(0, 0%, 8%);
+  --primary: hsl(0, 0%, 8%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(0, 0%, 95%);
+  --secondary-foreground: hsl(0, 0%, 8%);
+  --muted: hsl(0, 0%, 92%);
+  --muted-foreground: hsl(0, 0%, 40%);
+  --accent: hsl(210, 100%, 50%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --border: hsl(0, 0%, 88%);
+  --input: hsl(0, 0%, 96%);
+  --ring: hsl(0, 0%, 8%);
 
-  /* Pride colors */
-  --pride-pink: hsl(324, 100%, 50%);
-  --pride-orange: hsl(33, 100%, 50%);
-  --pride-yellow: hsl(48, 100%, 50%);
-  --pride-green: hsl(158, 100%, 41%);
-  --pride-blue: hsl(218, 100%, 58%);
-  --dark-bg: hsl(240, 9%, 4%);
-  --platinum: hsl(220, 10%, 91%);
+  /* Editorial Luxury Colors */
+  --editorial-black: hsl(0, 0%, 5%);
+  --editorial-charcoal: hsl(0, 0%, 15%);
+  --editorial-pearl: hsl(0, 0%, 97%);
+  --editorial-cream: hsl(42, 20%, 96%);
+  --editorial-gold: hsl(45, 100%, 51%);
+  --editorial-silver: hsl(0, 0%, 75%);
+  --editorial-champagne: hsl(54, 31%, 86%);
+  --editorial-burgundy: hsl(345, 63%, 31%);
+  --editorial-navy: hsl(217, 71%, 22%);
+  --editorial-emerald: hsl(159, 100%, 30%);
 
-  --chart-1: hsl(324, 100%, 50%);
-  --chart-2: hsl(158, 100%, 41%);
-  --chart-3: hsl(48, 100%, 50%);
-  --chart-4: hsl(147.1429, 78.5047%, 41.9608%);
-  --chart-5: hsl(218, 100%, 58%);
+  /* Pride colors - refined for luxury */
+  --pride-pink: hsl(324, 65%, 45%);
+  --pride-orange: hsl(33, 75%, 50%);
+  --pride-yellow: hsl(48, 85%, 55%);
+  --pride-green: hsl(158, 75%, 35%);
+  --pride-blue: hsl(218, 75%, 50%);
+
+  --chart-1: hsl(324, 65%, 45%);
+  --chart-2: hsl(158, 75%, 35%);
+  --chart-3: hsl(48, 85%, 55%);
+  --chart-4: hsl(147, 60%, 35%);
+  --chart-5: hsl(218, 75%, 50%);
   
-  --sidebar: hsl(180, 6.6667%, 97.0588%);
-  --sidebar-foreground: hsl(210, 25%, 7.8431%);
-  --sidebar-primary: hsl(203.8863, 88.2845%, 53.1373%);
-  --sidebar-primary-foreground: hsl(0, 0%, 100%);
-  --sidebar-accent: hsl(211.5789, 51.3514%, 92.7451%);
-  --sidebar-accent-foreground: hsl(203.8863, 88.2845%, 53.1373%);
-  --sidebar-border: hsl(205.0000, 25.0000%, 90.5882%);
-  --sidebar-ring: hsl(202.8169, 89.1213%, 53.1373%);
+  --sidebar: hsl(0, 0%, 100%);
+  --sidebar-foreground: hsl(0, 0%, 8%);
+  --sidebar-primary: hsl(0, 0%, 8%);
+  --sidebar-primary-foreground: hsl(0, 0%, 98%);
+  --sidebar-accent: hsl(0, 0%, 95%);
+  --sidebar-accent-foreground: hsl(0, 0%, 8%);
+  --sidebar-border: hsl(0, 0%, 88%);
+  --sidebar-ring: hsl(0, 0%, 8%);
+  
+  /* Typography System */
+  --font-display: 'Playfair Display', 'Times New Roman', serif;
+  --font-heading: 'Cormorant Garamond', 'Times New Roman', serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-serif: 'Georgia', serif;
-  --font-mono: 'Menlo', monospace;
-  --font-display: 'Montserrat', sans-serif;
-  --radius: 1.3rem;
+  --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+  --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  
+  /* Spacing & Design */
+  --radius: 0.125rem;
+  --editorial-spacing: 3rem;
+  --golden-ratio: 1.618;
 }
 
 .dark {
-  --background: hsl(240, 9%, 4%);
-  --foreground: hsl(200, 6.6667%, 91.1765%);
-  --card: hsl(228, 9.8039%, 10%);
-  --card-foreground: hsl(0, 0%, 85.0980%);
-  --popover: hsl(240, 9%, 4%);
-  --popover-foreground: hsl(200, 6.6667%, 91.1765%);
-  --primary: hsl(324, 100%, 50%);
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(195.0000, 15.3846%, 94.9020%);
-  --secondary-foreground: hsl(210, 25%, 7.8431%);
-  --muted: hsl(0, 0%, 9.4118%);
-  --muted-foreground: hsl(210, 3.3898%, 46.2745%);
-  --accent: hsl(205.7143, 70%, 7.8431%);
-  --accent-foreground: hsl(203.7736, 87.6033%, 52.5490%);
-  --destructive: hsl(356.3033, 90.5579%, 54.3137%);
-  --destructive-foreground: hsl(0, 0%, 100%);
-  --border: hsl(210, 5.2632%, 14.9020%);
-  --input: hsl(207.6923, 27.6596%, 18.4314%);
-  --ring: hsl(202.8169, 89.1213%, 53.1373%);
+  /* Luxury Magazine Dark Mode */
+  --background: hsl(0, 0%, 5%);
+  --foreground: hsl(0, 0%, 95%);
+  --card: hsl(0, 0%, 8%);
+  --card-foreground: hsl(0, 0%, 95%);
+  --popover: hsl(0, 0%, 5%);
+  --popover-foreground: hsl(0, 0%, 95%);
+  --primary: hsl(0, 0%, 95%);
+  --primary-foreground: hsl(0, 0%, 8%);
+  --secondary: hsl(0, 0%, 12%);
+  --secondary-foreground: hsl(0, 0%, 95%);
+  --muted: hsl(0, 0%, 15%);
+  --muted-foreground: hsl(0, 0%, 60%);
+  --accent: hsl(210, 100%, 60%);
+  --accent-foreground: hsl(0, 0%, 5%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(0, 0%, 95%);
+  --border: hsl(0, 0%, 18%);
+  --input: hsl(0, 0%, 12%);
+  --ring: hsl(0, 0%, 95%);
 
-  --sidebar: hsl(228, 9.8039%, 10%);
-  --sidebar-foreground: hsl(0, 0%, 85.0980%);
-  --sidebar-primary: hsl(202.8169, 89.1213%, 53.1373%);
-  --sidebar-primary-foreground: hsl(0, 0%, 100%);
-  --sidebar-accent: hsl(205.7143, 70%, 7.8431%);
-  --sidebar-accent-foreground: hsl(203.7736, 87.6033%, 52.5490%);
-  --sidebar-border: hsl(205.7143, 15.7895%, 26.0784%);
-  --sidebar-ring: hsl(202.8169, 89.1213%, 53.1373%);
+  --editorial-black: hsl(0, 0%, 95%);
+  --editorial-charcoal: hsl(0, 0%, 85%);
+  --editorial-pearl: hsl(0, 0%, 8%);
+  --editorial-cream: hsl(42, 20%, 12%);
+  --editorial-gold: hsl(45, 100%, 65%);
+  --editorial-silver: hsl(0, 0%, 50%);
+  --editorial-champagne: hsl(54, 31%, 25%);
+  --editorial-burgundy: hsl(345, 63%, 55%);
+  --editorial-navy: hsl(217, 71%, 65%);
+  --editorial-emerald: hsl(159, 100%, 45%);
+
+  --sidebar: hsl(0, 0%, 8%);
+  --sidebar-foreground: hsl(0, 0%, 95%);
+  --sidebar-primary: hsl(0, 0%, 95%);
+  --sidebar-primary-foreground: hsl(0, 0%, 8%);
+  --sidebar-accent: hsl(0, 0%, 12%);
+  --sidebar-accent-foreground: hsl(0, 0%, 95%);
+  --sidebar-border: hsl(0, 0%, 18%);
+  --sidebar-ring: hsl(0, 0%, 95%);
 }
 
 @layer base {
@@ -93,32 +123,198 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    font-feature-settings: "kern" 1, "liga" 1;
+    letter-spacing: -0.01em;
+    line-height: 1.6;
   }
   
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+  
+  h1 {
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 300;
+    letter-spacing: -0.05em;
+  }
+  
+  h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+  }
+  
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 400;
+  }
+  
+  h4 {
+    font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+    font-weight: 500;
+  }
+  
+  p {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+  }
+  
+  .editorial-lead {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: 0.025em;
+  }
+  
+  .caption {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 }
 
 @layer utilities {
-  .rainbow-gradient {
-    background: linear-gradient(135deg, var(--pride-pink) 0%, var(--pride-orange) 25%, var(--pride-yellow) 50%, var(--pride-green) 75%, var(--pride-blue) 100%);
+  /* Editorial Layout Utilities */
+  .editorial-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 5vw, 3rem);
   }
   
-  .rainbow-text {
-    background: linear-gradient(135deg, var(--pride-pink) 0%, var(--pride-orange) 25%, var(--pride-yellow) 50%, var(--pride-green) 75%, var(--pride-blue) 100%);
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: var(--editorial-spacing);
+    align-items: start;
+  }
+  
+  .editorial-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--editorial-spacing);
+    align-items: start;
+  }
+  
+  .editorial-spacing {
+    margin: calc(var(--editorial-spacing) * 2) 0;
+  }
+  
+  /* Luxury Visual Effects */
+  .editorial-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--editorial-charcoal)), transparent);
+    margin: 3rem 0;
+  }
+  
+  .editorial-backdrop {
+    background: linear-gradient(135deg, 
+      hsl(var(--editorial-pearl)) 0%, 
+      hsl(var(--editorial-cream)) 100%);
+  }
+  
+  .editorial-shadow {
+    box-shadow: 0 25px 50px -12px hsla(0, 0%, 0%, 0.08);
+  }
+  
+  .editorial-border {
+    border: 1px solid hsl(var(--editorial-silver));
+  }
+  
+  /* Refined Pride Colors */
+  .pride-gradient-editorial {
+    background: linear-gradient(135deg, 
+      var(--pride-pink) 0%, 
+      var(--pride-orange) 25%, 
+      var(--pride-yellow) 50%, 
+      var(--pride-green) 75%, 
+      var(--pride-blue) 100%);
+  }
+  
+  .pride-text-editorial {
+    background: linear-gradient(135deg, 
+      var(--pride-pink) 0%, 
+      var(--pride-orange) 25%, 
+      var(--pride-yellow) 50%, 
+      var(--pride-green) 75%, 
+      var(--pride-blue) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   
-  .hero-bg {
-    background: radial-gradient(circle at 20% 50%, hsla(324, 100%, 50%, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, hsla(218, 100%, 58%, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, hsla(158, 100%, 41%, 0.1) 0%, transparent 50%);
+  /* Luxury Hover Effects */
+  .editorial-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  .glow-effect {
-    box-shadow: 0 0 20px hsla(324, 100%, 50%, 0.3);
+  .editorial-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 35px 60px -12px hsla(0, 0%, 0%, 0.15);
+  }
+  
+  /* Magazine-style Image Overlays */
+  .editorial-overlay {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .editorial-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+      hsla(0, 0%, 0%, 0.3) 0%, 
+      hsla(0, 0%, 0%, 0.1) 50%, 
+      transparent 100%);
+    z-index: 1;
+  }
+  
+  /* Typography Emphasis */
+  .editorial-dropcap::first-letter {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    line-height: 1;
+    float: left;
+    margin: 0 0.5rem 0 0;
+    font-weight: 300;
+  }
+  
+  .editorial-quote {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-style: italic;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    text-align: center;
+    margin: 3rem 0;
+    position: relative;
+  }
+  
+  .editorial-quote::before,
+  .editorial-quote::after {
+    content: '"';
+    font-size: 3rem;
+    color: hsl(var(--editorial-silver));
+    position: absolute;
+  }
+  
+  .editorial-quote::before {
+    top: -1rem;
+    left: -2rem;
+  }
+  
+  .editorial-quote::after {
+    bottom: -2rem;
+    right: -2rem;
   }
 }
