@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Download } from "lucide-react";
+import worldMapImage from "@assets/IMG_1980_1755424202237.png";
 
 export function InteractiveMap() {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -134,6 +135,24 @@ export function InteractiveMap() {
               Our proprietary methodology combines legislative analysis, social sentiment data, 
               and community reports to create the world's most comprehensive safety assessment.
             </p>
+          </div>
+        </div>
+
+        {/* Hero World Map Display */}
+        <div className="mb-16">
+          <div className="relative editorial-shadow rounded-lg overflow-hidden">
+            <img 
+              src={worldMapImage} 
+              alt="Global LGBTQ+ Safety Index World Map" 
+              className="w-full h-[400px] lg:h-[500px] object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+            <div className="absolute bottom-8 left-8 right-8 text-white">
+              <div className="backdrop-blur-sm bg-black/40 p-6 rounded-lg">
+                <h3 className="font-display text-2xl lg:text-3xl mb-2">Global Safety Visualization</h3>
+                <p className="text-sm opacity-90">Pride gradient overlay represents safety scores across 195 nations</p>
+              </div>
+            </div>
           </div>
         </div>
 

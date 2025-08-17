@@ -1,5 +1,6 @@
 import { Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import iqsfLogo from "@assets/C3691AE0-2049-405A-A6E3-02957326D903_1755424202237.png";
 
 export function Header() {
   const scrollToSection = (sectionId: string) => {
@@ -15,12 +16,16 @@ export function Header() {
         <div className="flex justify-between items-center py-6">
           {/* Prominent IQSF Branding */}
           <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 bg-black flex items-center justify-center">
-              <Shield className="text-white h-5 w-5" />
+            <div className="w-12 h-12 flex items-center justify-center">
+              <img 
+                src={iqsfLogo} 
+                alt="IQSF Logo" 
+                className="w-10 h-10 object-contain"
+              />
             </div>
             <div>
-              <h1 className="font-display text-4xl lg:text-5xl tracking-wider text-black font-light">IQSF</h1>
-              <p className="caption text-sm text-black/70 tracking-[0.2em] mt-1">Defining Safety, Advancing Equality</p>
+              <h1 className="font-display text-3xl lg:text-4xl tracking-wider text-black font-light">IQSF</h1>
+              <p className="caption text-xs text-black/70 tracking-[0.2em] mt-1">International Queer Safety Foundation</p>
             </div>
           </div>
 
