@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import coverImage from "@assets/IMG_0299_1755419317873.jpeg";
 
 export function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -59,26 +60,27 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Editorial Image Section */}
+          {/* Editorial Cover Image */}
           <div className="relative h-full min-h-[600px] lg:min-h-[700px]">
-            <div className="absolute inset-0 editorial-overlay bg-gradient-to-br from-black/5 via-transparent to-black/10">
-              <div className="h-full w-full bg-gradient-to-br from-purple-100/30 via-blue-50/40 to-green-100/30 flex items-center justify-center">
-                <div className="text-center space-y-6 text-black/20">
-                  <div className="text-8xl font-light">IQSF</div>
-                  <div className="caption tracking-[0.4em]">EDITORIAL COLLECTION</div>
-                </div>
-              </div>
+            <div className="absolute inset-0 editorial-shadow">
+              <img 
+                src={coverImage}
+                alt="IQSF Editorial Cover"
+                className="w-full h-full object-cover"
+                style={{ filter: 'grayscale(15%) contrast(1.1) brightness(0.95)' }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-black/20"></div>
             </div>
             
             {/* Magazine-style overlay text */}
             <div className="absolute bottom-8 left-8 right-8 space-y-4 text-white">
-              <div className="backdrop-blur-sm bg-black/20 p-6 border border-white/20">
-                <p className="caption text-sm tracking-wide mb-2">Inside This Issue</p>
-                <ul className="space-y-1 text-sm">
+              <div className="backdrop-blur-sm bg-black/40 p-6 border border-white/30">
+                <p className="caption text-sm tracking-[0.2em] mb-3 text-white/80">Inside This Issue</p>
+                <ul className="space-y-2 text-sm font-light">
                   <li>• Global Safety Index Analysis</li>
-                  <li>• Certification Framework</li>
-                  <li>• Member Spotlights</li>
-                  <li>• Data Visualization Stories</li>
+                  <li>• Interactive Map Exploration</li>
+                  <li>• Certification & Standards</li>
+                  <li>• Community Impact Stories</li>
                 </ul>
               </div>
             </div>
